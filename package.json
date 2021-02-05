@@ -1,0 +1,14 @@
+{
+  "name": "crime-viz",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node parser.js"
+  },
+  "author": "Rees Draminski",
+  "license": "MIT",
+  "dependencies": {
+    "pdf.js-extract": "^0.1.5"
+  }
+}
