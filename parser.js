@@ -15,12 +15,16 @@ const fs = require('fs');
         "input_data/01-2021.pdf"
     ];
 
+    // go through all the input files and produce an output JSON file
     for (const filepath of inputFiles)
     {
+        // get the file name from the file path
         const filename = filepath.substring(filepath.indexOf("/") + 1);
         
+        // pull the data from the PDF
         const data = await getDataFromPDF(filepath);
         
+        // write the data from the PDF to a JSON file
         fs.writeFileSync(`output/${filename.replace("pdf", "json")}`, JSON.stringify(data));
     }
 })();
@@ -97,7 +101,7 @@ async function getDataFromPDF(filename) {
             }
             // process a "Disposition:" line
             else if (state == "disposition") {
-                // replace PAT or INV disposition codes
+                // replace PAT or INV disposition codes and convert to proper capitalization
                 entry.disposition = properCapitalize(
                     line
                         .replace("Disposition:PAT-", "")
@@ -111,6 +115,7 @@ async function getDataFromPDF(filename) {
                 // add a deep copy of the entry object to the incident entries array
                 incidentEntries.push(JSON.parse(JSON.stringify(entry)));
 
+                // reset the entry object to start parsing a new incident
                 entry = {
                     incident: ""
                 }
@@ -118,8 +123,8 @@ async function getDataFromPDF(filename) {
         }
     }
 
+    // return the array of incident entries since we're done parsing the page
     return incidentEntries;
-
 }
 
 /**
