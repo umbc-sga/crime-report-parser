@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "node parser.js"
+    "start": "node analyzer.js"
   },
   "author": "Rees Draminski",
   "license": "MIT",

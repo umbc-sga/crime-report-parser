@@ -3,7 +3,7 @@ const PDFExtract = require("pdf.js-extract").PDFExtract;
 const pdfExtract = new PDFExtract();
 
 // import filesystem module
-const fs = require('fs');
+const fs = require("fs");
 
 /**
  * Parse the crime report PDFs and write to a JSON when this module is executed.
@@ -73,11 +73,13 @@ async function getDataFromPDF(filename) {
             else if (line.indexOf("incident(s) listed") != -1) break;
 
             // process a "Report Date:" line
-            if (state == "reportDate") {
+            if (state == "reportDate") 
+            {
                 entry.reportDate = parseDateLine(line.replace("Date Reported:", ""));
             }
             // process a "General Location:" line
-            else if (state == "location") {
+            else if (state == "location") 
+            {
                 let locationLine = line;
                 locationLine = locationLine.replace("General Location:", "");
 
@@ -87,20 +89,58 @@ async function getDataFromPDF(filename) {
                 entry.onCampus = tokens.includes("On Campus");
             }
             // process a "Date Occurred From:" line
-            else if (state == "timeStart") {
+            else if (state == "timeStart") 
+            {
                 entry.timeStart = parseDateLine(line.replace("Date Occurred From:", ""));
             }
             // process a "Date Occurred To:" line
-            else if (state == "timeEnd") {
+            else if (state == "timeEnd") 
+            {
                 entry.timeEnd = parseDateLine(line.replace("Date Occurred To:", ""));
             }
             // process an "Incident/Offenses:" line
-            else if (state == "incident") {
+            else if (state == "incident") 
+            {
                 // append to incident line in case it's multiple lines
                 entry.incident += line.replace("Incident/Offenses:", "");
             }
             // process a "Disposition:" line
-            else if (state == "disposition") {
+            else if (state == "disposition") 
+            {
+                // once we are in this state, we know the incident line is complete so we can process it
+                const incidentClass = entry.incident.substring(0, entry.incident.indexOf("-") - 1);
+                entry.incidentClass = properCapitalize(incidentClass);
+
+                // get rid of the incident class from the incident property
+                entry.incident = entry.incident.replace(`${incidentClass} - `, "");
+
+                // remove Clery Act stipulation from the incident and record as separate property
+                if (entry.incident.includes("Clery Stat Only"))
+                {
+                    entry.incident = entry.incident.replace(`Clery Stat Only`, "");
+                    entry.cleryStatOnly = true;
+                }
+                else
+                {
+                    entry.cleryStatOnly = false;
+                }
+
+                // get last instance of "//" to get the most specific sub class of the incident
+                const subcategories = entry.incident.split(" // ");
+                if (subcategories.length > 1)
+                {
+                    // get the most specific subclass at the last catgory that follows a "//" separator
+                    const mostSpecificSubClass = subcategories[subcategories.length - 1];
+
+                    // clean off the subclass for an actual description
+                    const incidentSubClass = mostSpecificSubClass.substring(mostSpecificSubClass.indexOf("-") + 1);
+
+                    // trim non-alphabetic characters from the sub class string
+                    entry.incidentSubClass = specialTrim(incidentSubClass);
+                }
+
+                // TODO categorize "()" as sub classes of incident too?
+
                 // replace PAT or INV disposition codes and convert to proper capitalization
                 entry.disposition = properCapitalize(
                     line
@@ -109,7 +149,8 @@ async function getDataFromPDF(filename) {
                 );
             }
             // process a "Modified Date:" line
-            else if (state == "dateModified") {
+            else if (state == "dateModified") 
+            {
                 entry.dateModified = parseDateLine(line.replace("Modified Date:", ""));
 
                 // add a deep copy of the entry object to the incident entries array
@@ -128,12 +169,35 @@ async function getDataFromPDF(filename) {
 }
 
 /**
+ * Trim whitespace and extra non-alphabetic characters.
+ */
+function specialTrim(str) {
+    const alphabet = "abcdefghijklmnopqrstuvwxyz";
+
+    // trim non-alphabetic characters from the front
+    while (!alphabet.includes(str[0].toLowerCase()))
+    {
+        str = str.substr(1);
+    }
+
+    // trim non-alphabetic characters from the back
+    while (!alphabet.includes(str[str.length - 1].toLowerCase()))
+    {
+        str = str.substr(0, str.length - 1);
+    }
+    
+    return str;
+}
+
+/**
  * 
  * @param {String} str 
  * @return {String} properCapitalizedStr
  */
 function properCapitalize(str) {
-    return str.substring(0, 1).toUpperCase() + str.substring(1).toLowerCase();
+    return str.split(" ")
+        .map(x => x.substring(0, 1).toUpperCase() + x.substring(1).toLowerCase())
+        .join(" ");
 }
 
 /**

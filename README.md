@@ -11,7 +11,7 @@ The plan for this project is to parse the Crime Report archive from UMBC Police 
 ## How to run this program yourself
 1. Have `node` and `npm` installed on your development environment.
 2. Clone this repository and run `npm install` to install the required packages.
-3. Run `npm start` (which is just an alias to `node parser.js`) to run the parser program.
+3. Run `node parser.js` to run the parser program or `node analyzer.js` to run the analyzer program.
 
 ## Do I need to run it myself?
 No, you don't have to because the outputs are already stored in this repository, and they will also eventually be on the UMBC SGA API, but perhaps you have older files that are no longer listed on the UMBC Police website, or have an idea of how to improve the parser. Contributions are always welcome!
