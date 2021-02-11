@@ -5,27 +5,26 @@ const pdfExtract = new PDFExtract();
 // import filesystem module
 const fs = require("fs");
 
+const INPUT_DIR = "./input_data";
+
 /**
  * Parse the crime report PDFs and write to a JSON when this module is executed.
  */
 (async function processData() {
     // array of all the input files (crime reports)
-    const inputFiles = [
-        "input_data/01-2020.pdf",
-        "input_data/01-2021.pdf"
-    ];
+    const inputFiles = fs.readdirSync(INPUT_DIR);
 
     // go through all the input files and produce an output JSON file
-    for (const filepath of inputFiles)
+    for (const filename of inputFiles)
     {
         // get the file name from the file path
-        const filename = filepath.substring(filepath.indexOf("/") + 1);
+        const filepath = `${INPUT_DIR}/${filename}`;
         
         // pull the data from the PDF
         const data = await getDataFromPDF(filepath);
         
         // write the data from the PDF to a JSON file
-        fs.writeFileSync(`output/${filename.replace("pdf", "json")}`, JSON.stringify(data));
+        fs.writeFileSync(`output/${filename.replace("pdf", "json")}`, JSON.stringify(data, null, 4));
     }
 })();
 
@@ -137,6 +136,9 @@ async function getDataFromPDF(filename) {
 
                     // trim non-alphabetic characters from the sub class string
                     entry.incidentSubClass = specialTrim(incidentSubClass);
+
+                    // chop off the subclass from the incident property
+                    entry.incident = entry.incident.substring(0, entry.incident.indexOf(" //"));
                 }
 
                 // TODO categorize "()" as sub classes of incident too?
@@ -146,6 +148,7 @@ async function getDataFromPDF(filename) {
                     line
                         .replace("Disposition:PAT-", "")
                         .replace("Disposition:inv-", "")
+                        .replace("Disposition:INV-", "")
                 );
             }
             // process a "Modified Date:" line

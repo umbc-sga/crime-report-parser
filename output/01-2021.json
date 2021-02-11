@@ -1,1 +1,74 @@
-[{"incident":"Destruction of Property","reportDate":1609770840000,"location":"Off Campus","onCampus":false,"timeStart":1609768800000,"timeEnd":1609770840000,"incidentClass":"Mal Destruction","cleryStatOnly":false,"disposition":"Suspended","dateModified":1612136280000},{"incident":"False Alarm of Fire","reportDate":1610054580000,"location":"Meyerhoff Chemistry Bldg","onCampus":true,"timeStart":1610054100000,"timeEnd":1610055660000,"incidentClass":"Interference","cleryStatOnly":false,"disposition":"Suspended","dateModified":1611594300000},{"incident":"CDS, Possession (Marijuana)","reportDate":1611801780000,"location":"Harbor Hall","onCampus":true,"timeStart":1611801780000,"timeEnd":1611804420000,"incidentClass":"Drugs","cleryStatOnly":false,"disposition":"Closed","dateModified":1611936900000},{"incident":"-Fondling","reportDate":1611843960000,"location":"Patapsco Hall","onCampus":true,"timeStart":1580360400000,"timeEnd":1581051540000,"incidentClass":"Clery","cleryStatOnly":true,"disposition":"Disposition:inv-unfounded","dateModified":1612193400000},{"incident":"-Burglary","reportDate":1611930720000,"location":"Magothy / West Hill","onCampus":true,"timeStart":1610053200000,"timeEnd":1610917200000,"incidentClass":"Clery","cleryStatOnly":true,"disposition":"Disposition:inv-suspended","dateModified":1611937620000},{"incident":"Telephone Misuse (Repeat Calls)","reportDate":1612000020000,"location":"909 Walker Ave Apts","onCampus":true,"timeStart":1596337200000,"timeEnd":1612065600000,"incidentClass":"Harassment","cleryStatOnly":false,"disposition":"Open","dateModified":1612129020000}]
+[
+    {
+        "incident": "Destruction of Property",
+        "reportDate": 1609770840000,
+        "location": "Off Campus",
+        "onCampus": false,
+        "timeStart": 1609768800000,
+        "timeEnd": 1609770840000,
+        "incidentClass": "Mal Destruction",
+        "cleryStatOnly": false,
+        "disposition": "Suspended",
+        "dateModified": 1612136280000
+    },
+    {
+        "incident": "False Alarm of Fire",
+        "reportDate": 1610054580000,
+        "location": "Meyerhoff Chemistry Bldg",
+        "onCampus": true,
+        "timeStart": 1610054100000,
+        "timeEnd": 1610055660000,
+        "incidentClass": "Interference",
+        "cleryStatOnly": false,
+        "disposition": "Suspended",
+        "dateModified": 1611594300000
+    },
+    {
+        "incident": "CDS, Possession (Marijuana)",
+        "reportDate": 1611801780000,
+        "location": "Harbor Hall",
+        "onCampus": true,
+        "timeStart": 1611801780000,
+        "timeEnd": 1611804420000,
+        "incidentClass": "Drugs",
+        "cleryStatOnly": false,
+        "disposition": "Closed",
+        "dateModified": 1611936900000
+    },
+    {
+        "incident": "-Fondling",
+        "reportDate": 1611843960000,
+        "location": "Patapsco Hall",
+        "onCampus": true,
+        "timeStart": 1580360400000,
+        "timeEnd": 1581051540000,
+        "incidentClass": "Clery",
+        "cleryStatOnly": true,
+        "disposition": "Unfounded",
+        "dateModified": 1612193400000
+    },
+    {
+        "incident": "-Burglary",
+        "reportDate": 1611930720000,
+        "location": "Magothy / West Hill",
+        "onCampus": true,
+        "timeStart": 1610053200000,
+        "timeEnd": 1610917200000,
+        "incidentClass": "Clery",
+        "cleryStatOnly": true,
+        "disposition": "Suspended",
+        "dateModified": 1611937620000
+    },
+    {
+        "incident": "Telephone Misuse (Repeat Calls)",
+        "reportDate": 1612000020000,
+        "location": "909 Walker Ave Apts",
+        "onCampus": true,
+        "timeStart": 1596337200000,
+        "timeEnd": 1612065600000,
+        "incidentClass": "Harassment",
+        "cleryStatOnly": false,
+        "disposition": "Open",
+        "dateModified": 1612129020000
+    }
+]
